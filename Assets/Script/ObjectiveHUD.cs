@@ -15,12 +15,27 @@ public class ObjectiveHUD : MonoBehaviour
     private Coroutine running;
 
     void Awake() { Instance = this; }
-    void Start()  { SetObjective(initialObjective); }
+    void Start() { SetObjective(initialObjective); }
 
     public void SetObjective(string text)
     {
         objectiveText.text = text;
-        if (running != null) StopCoroutine(running);
+        ShowObjective();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ShowObjective();
+        }
+    }
+
+    public void ShowObjective()
+    {
+        if (running != null)
+            StopCoroutine(running);
+
         running = StartCoroutine(Show());
     }
 
@@ -29,7 +44,7 @@ public class ObjectiveHUD : MonoBehaviour
         yield return Fade(group.alpha, 1f);
         if (visibleTime <= 0f) yield break;
         yield return new WaitForSeconds(visibleTime);
-        yield return Fade(1f, 0.35f); // fica discreto, nao some por completo
+        yield return Fade(1f, 0f);
     }
 
     IEnumerator Fade(float from, float to)
