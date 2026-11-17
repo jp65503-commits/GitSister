@@ -1104,7 +1104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e320f6556b802a4d951b2eb922b026d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Teletransporte
-  nomeDaFase: 4Fase
+  nomeDaFase: 4Fase (Final)
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
