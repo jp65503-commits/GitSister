@@ -177,8 +177,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0719063250afc75488cf8d3d4dc6083b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMorte
-  deathParticles: {fileID: 1858554627872707405, guid: 0f21decc033e9144c80d51c31c002427, type: 3}
   player: {fileID: 8519268432390539995}
+  playerAnimator: {fileID: 3508210841291705335}
   respawnTime: 1.5
   dead: 0
   respawned: 0
@@ -925,7 +925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3622411569514598039
 Transform:
   m_ObjectHideFlags: 0
@@ -1336,14 +1336,17 @@ MonoBehaviour:
   groundedTrigger: {fileID: 8939153738239627144}
   jumpTrail: {fileID: 3164752335781115497}
   landingParticles: {fileID: 4483696633904255747, guid: f0f2b7c252ce7c74ea85247ac4427f69, type: 3}
+  playerMorte: {fileID: 963023925498634349}
   moveSpeed: 5
   jumpForce: 7
   jumpCutOffForce: 0.5
   setCoyoteTime: 5
   currentCoyoteTime: 0
   isGrounded: 0
-  canJump: 0
+  canJump: 1
   hasLeftGround: 0
+  playerAnimator: {fileID: 3508210841291705335}
+  playerModel: {fileID: 3599606251214558955}
 --- !u!96 &3164752335781115497
 TrailRenderer:
   serializedVersion: 4
@@ -1352,7 +1355,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8519268432390539995}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1553,6 +1556,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de2a7efe044817e43b49fa819dea7499, type: 3}
+--- !u!95 &3508210841291705335 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95735082086840126, guid: de2a7efe044817e43b49fa819dea7499, type: 3}
+  m_PrefabInstance: {fileID: 3601672028094594249}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3599606251214558955 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4480994524703266, guid: de2a7efe044817e43b49fa819dea7499, type: 3}

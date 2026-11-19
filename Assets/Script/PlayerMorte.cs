@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class PlayerMorte : MonoBehaviour
 {
     [Header("Referências")]
-    [SerializeField] private GameObject deathParticles;
+    //[SerializeField] private GameObject deathParticles;
     [SerializeField] private GameObject player;
+    [SerializeField] private Animator playerAnimator;
 
     [Header("Ajustes do respawn")]
     [SerializeField] private float respawnTime;
@@ -27,16 +28,18 @@ public class PlayerMorte : MonoBehaviour
             respawned = true;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-    }
+    }   
 
     public void KillPlayer()
     {
         if (!dead)
         {
             dead = true;
-            Instantiate(deathParticles, player.transform.position, deathParticles.transform.rotation);
+         //  Instantiate(deathParticles, player.transform.position, deathParticles.transform.rotation);
             Camera.main.transform.SetParent(null);
-            Destroy(player);
+            playerAnimator.SetBool("isDie", true);
+
+         //   Destroy(player);
         }
     }
 }

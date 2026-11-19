@@ -5,11 +5,12 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    [Header("Refer ncias")]
+    [Header("Referencias")]
     [SerializeField] private Rigidbody rigidBodyPlayer;
     [SerializeField] private BoxCollider groundedTrigger;
     [SerializeField] private TrailRenderer jumpTrail;
     [SerializeField] private GameObject landingParticles;
+    [SerializeField] private PlayerMorte playerMorte;
 
     [Header("Ajustes da Movimentação")]
     [SerializeField] private float moveSpeed;
@@ -25,6 +26,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public bool canJump;
     [SerializeField] private bool hasLeftGround;
 
+    [Header("Animaçoes")]
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private Transform playerModel;
+
     // Guarda a dire  o horizontal desejada pelo jogador
     private float inputHorizontal;
 
@@ -32,63 +37,91 @@ public class PlayerMove : MonoBehaviour
     {
         inputHorizontal = Input.GetAxisRaw("Horizontal");
 
-        if (!isGrounded && !hasLeftGround && currentCoyoteTime > 0f)
+        playerAnimator.SetBool("isWalking", Mathf.Abs(inputHorizontal) > 0.01f);
+
+        playerAnimator.SetBool("isGrounded", isGrounded);
+
+        if (!playerMorte.dead)
         {
-            hasLeftGround = true;
-        }
-
-        // Detecta quando o jogador aperta o espa o (isso acontece apenas uma vez por click pq estamos utilizando o "Down")
-        if (Input.GetKeyDown(KeyCode.Space) && canJump)
-        {
-            transform.SetParent(null);
-
-            // Mantemos a velocidade no eixo X (ou seja esquerda e direita) e aplicamos um impulso no eixo Y (Horizontal) com base na variavel "jumpForce"
-            rigidBodyPlayer.linearVelocity = new Vector2(rigidBodyPlayer.linearVelocity.x, jumpForce);
-
-            // Aqui resetamos o pulo para o player n conseguir pular infinitamente depois de ja ter pulado
-            currentCoyoteTime = setCoyoteTime;
-            canJump = false;
-        }
-
-        // Detecta quando o jogador solta o Espa o e se o player ainda est  subindo com o pulo (basicamente, se essas duas condi  es forem verdadeiras, a velocidade vertical   reduzida)
-        // Ou de maneira mais reconhecivel kkk segure para pul o clicke para pulinho
-        if (Input.GetKeyUp(KeyCode.Space) && rigidBodyPlayer.linearVelocity.y > 0)
-        {
-            rigidBodyPlayer.linearVelocity = new Vector2(rigidBodyPlayer.linearVelocity.x, rigidBodyPlayer.linearVelocity.y * jumpCutOffForce);
-        }
-
-        // *C LCULOS PARA O "COYOTE TIME" ABAIXO*
-        // Coyote time e um elemento bem importante para plataformers, ele basicamente deixa o player pular mesmo se ele tiver perdido a janela de pulo por um momento bem rapido
-        // Isso acontece porque players tendem a querer pular no ultimo segundo e as vezes caem no ultimo frame kkk, basicamente deixa a experiencia menos frustrante
-
-        if (!isGrounded && currentCoyoteTime < setCoyoteTime)
-        {
-            currentCoyoteTime += Time.deltaTime;
-
-            currentCoyoteTime = Mathf.Clamp(currentCoyoteTime, 0f, setCoyoteTime);
-
-            if (currentCoyoteTime >= setCoyoteTime)
+            if (inputHorizontal > 0f)
             {
+                playerModel.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            }
+
+            else if (inputHorizontal < 0f)
+            {
+                playerModel.localRotation = Quaternion.Euler(0f, -90f, 0f);
+            }
+
+
+
+
+            if (!isGrounded && !hasLeftGround && currentCoyoteTime > 0f)
+            {
+                hasLeftGround = true;
+            }
+
+            // Detecta quando o jogador aperta o espa o (isso acontece apenas uma vez por click pq estamos utilizando o "Down")
+            if (Input.GetKeyDown(KeyCode.Space) && canJump)
+            {
+                transform.SetParent(null);
+
+                // Mantemos a velocidade no eixo X (ou seja esquerda e direita) e aplicamos um impulso no eixo Y (Horizontal) com base na variavel "jumpForce"
+                rigidBodyPlayer.linearVelocity = new Vector2(rigidBodyPlayer.linearVelocity.x, jumpForce);
+
+                // Aqui resetamos o pulo para o player n conseguir pular infinitamente depois de ja ter pulado
+                currentCoyoteTime = setCoyoteTime;
                 canJump = false;
             }
+
+            // Detecta quando o jogador solta o Espa o e se o player ainda est  subindo com o pulo (basicamente, se essas duas condi  es forem verdadeiras, a velocidade vertical   reduzida)
+            // Ou de maneira mais reconhecivel kkk segure para pul o clicke para pulinho
+            if (Input.GetKeyUp(KeyCode.Space) && rigidBodyPlayer.linearVelocity.y > 0)
+            {
+                rigidBodyPlayer.linearVelocity = new Vector2(rigidBodyPlayer.linearVelocity.x, rigidBodyPlayer.linearVelocity.y * jumpCutOffForce);
+            }
+
+            // C LCULOS PARA O "COYOTE TIME" ABAIXO
+            // Coyote time e um elemento bem importante para plataformers, ele basicamente deixa o player pular mesmo se ele tiver perdido a janela de pulo por um momento bem rapido
+            // Isso acontece porque players tendem a querer pular no ultimo segundo e as vezes caem no ultimo frame kkk, basicamente deixa a experiencia menos frustrante
+
+            if (!isGrounded && currentCoyoteTime < setCoyoteTime)
+            {
+                currentCoyoteTime += Time.deltaTime;
+
+                currentCoyoteTime = Mathf.Clamp(currentCoyoteTime, 0f, setCoyoteTime);
+
+                if (currentCoyoteTime >= setCoyoteTime)
+                {
+                    canJump = false;
+                }
+            }
+
+            // Aqui nos resetamos o tempo que o player tem para pular, eu estou usando o "currentCoyoteTime != 0" para o jogo n ficar reiniciando essa variavel todo frame
+
+            if (isGrounded && rigidBodyPlayer.linearVelocity.y <= 0 && currentCoyoteTime != 0 && hasLeftGround)
+            {
+                currentCoyoteTime = 0;
+                jumpTrail.emitting = false;
+                Instantiate(landingParticles, groundedTrigger.transform.position, landingParticles.transform.rotation);
+                hasLeftGround = false;
+                canJump = true;
+            }
+
+            // Aqui estou ativando o trail caso o player esteja no ar
+
+            if (!isGrounded && jumpTrail.emitting == false && hasLeftGround)
+            {
+                jumpTrail.emitting = true;
+            }
         }
-
-        // Aqui nos resetamos o tempo que o player tem para pular, eu estou usando o "currentCoyoteTime != 0" para o jogo n ficar reiniciando essa variavel todo frame
-
-        if (isGrounded && rigidBodyPlayer.linearVelocity.y <= 0 && currentCoyoteTime != 0 && hasLeftGround)
+        else
         {
             currentCoyoteTime = 0;
             jumpTrail.emitting = false;
-            Instantiate(landingParticles, groundedTrigger.transform.position, landingParticles.transform.rotation);
             hasLeftGround = false;
-            canJump = true;
-        }
-
-        // Aqui estou ativando o trail caso o player esteja no ar
-
-        if (!isGrounded && jumpTrail.emitting == false && hasLeftGround)
-        {
-            jumpTrail.emitting = true;
+            canJump = false;
+            rigidBodyPlayer.linearVelocity = Vector2.zero;
         }
     }
 
@@ -99,7 +132,14 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate() // O FixedUpdate   parecido com o Update normal, a diferen a   que ele   chamado em intervalos fixos de tempo
     {
         // Esse   o c lculo base da movimenta  o, basicamente ele pega a dire  o, multiplica pela velocidade e aplica ao Rigidbody2D do player
-        rigidBodyPlayer.linearVelocity = new Vector2(inputHorizontal * moveSpeed, rigidBodyPlayer.linearVelocity.y);
+            if (!playerMorte.dead)
+        {
+            rigidBodyPlayer.linearVelocity = new Vector2(inputHorizontal * moveSpeed, rigidBodyPlayer.linearVelocity.y);
+        }
+        else
+        {
+            rigidBodyPlayer.linearVelocity = Vector2.zero;
+        }
 
         // Essa verifica  o esta sendo feita para verificar se o p  do player "GroundedTrigger" ta encostando em alguma plataforma
         // Basicamente para verificar se o player pode pular ou n o

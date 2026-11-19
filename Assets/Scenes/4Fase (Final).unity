@@ -330,7 +330,6 @@ Transform:
   m_Children:
   - {fileID: 1300838324}
   - {fileID: 1142610431}
-  - {fileID: 1392441507}
   - {fileID: 1818700803}
   - {fileID: 832575519}
   m_Father: {fileID: 0}
@@ -3380,73 +3379,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368371577}
   m_Mesh: {fileID: 4300080, guid: a7cc7f41ce50a474aa1df610be0b810f, type: 3}
---- !u!1 &1392441505
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1392441507}
-  - component: {fileID: 1392441506}
-  - component: {fileID: 1392441508}
-  m_Layer: 0
-  m_Name: Teletransporte
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!65 &1392441506
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392441505}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1392441507
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392441505}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 88.74, y: 0.27, z: 0}
-  m_LocalScale: {x: 1, y: 100, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 66409619}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1392441508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1392441505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e320f6556b802a4d951b2eb922b026d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Teletransporte
-  nomeDaFase: 2Fase
 --- !u!1 &1432599297
 GameObject:
   m_ObjectHideFlags: 0
@@ -5307,7 +5239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7498005460563368078, guid: 9c318bf039f432d458ca1e0470b5cbe6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.1
+      value: 77.2
       objectReference: {fileID: 0}
     - target: {fileID: 7498005460563368078, guid: 9c318bf039f432d458ca1e0470b5cbe6, type: 3}
       propertyPath: m_LocalPosition.y
