@@ -925,7 +925,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3622411569514598039
 Transform:
   m_ObjectHideFlags: 0
@@ -956,7 +956,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8008504074950009845}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1032,6 +1032,7 @@ GameObject:
   - component: {fileID: 545565464750249609}
   - component: {fileID: 2728582479546976980}
   - component: {fileID: 8601290179859484541}
+  - component: {fileID: 9048618820486710909}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1174,6 +1175,22 @@ MonoBehaviour:
   objectiveCanvas: {fileID: 0}
   pauseMenu: {fileID: 0}
   isPaused: 0
+--- !u!114 &9048618820486710909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8363637805156760783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00e7405067e5a9047b90f4244bc66d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  audioSourceSFX: {fileID: 0}
+  puloSFX: {fileID: 8300000, guid: 8fb3ad3bcbcb1424ebb7278ef3a2fa85, type: 3}
+  botaoAtivoSFX: {fileID: 8300000, guid: dec5c93964f71e84f9bbc1485434245e, type: 3}
+  botaoDesativoSFX: {fileID: 8300000, guid: 0c94b365e4a665543af0425854b3bdf4, type: 3}
 --- !u!1 &8519268432390539995
 GameObject:
   m_ObjectHideFlags: 0
@@ -1318,7 +1335,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 104
+  m_Constraints: 120
   m_CollisionDetection: 1
 --- !u!114 &5170292488813132146
 MonoBehaviour:
@@ -1337,6 +1354,7 @@ MonoBehaviour:
   jumpTrail: {fileID: 3164752335781115497}
   landingParticles: {fileID: 4483696633904255747, guid: f0f2b7c252ce7c74ea85247ac4427f69, type: 3}
   playerMorte: {fileID: 963023925498634349}
+  audioManager: {fileID: 9048618820486710909}
   moveSpeed: 5
   jumpForce: 7
   jumpCutOffForce: 0.5
