@@ -4,7 +4,7 @@ public class Botao : MonoBehaviour
 {
     [Header("Referencias")]
     [SerializeField] private AudioManager audioManager;
-    //[SerializeField] private PortaInteragivel portaInteragivel;
+    [SerializeField] private PortaInteragivel portaInteragivel;
 
     [Header("Verificações")]
     [SerializeField] public bool ativo;
@@ -24,8 +24,8 @@ public class Botao : MonoBehaviour
             if (!ativo)
             {
                 ativo = true;
-               audioManager.TocarSFX(audioManager.botaoAtivoSFX);
-                //portaInteragivel.AbrirPorta();
+                audioManager.TocarSFX(audioManager.botaoAtivoSFX);
+                portaInteragivel.AbrirPorta();
                 Debug.Log("enter trigger!");
             }
         }
@@ -41,7 +41,7 @@ public class Botao : MonoBehaviour
             {
                 objetosDentro = 0;
                 audioManager.TocarSFX(audioManager.botaoDesativoSFX);
-               // portaInteragivel.FecharPorta();
+                portaInteragivel.FecharPorta();
                 ativo = false;
                 Debug.Log("left trigger!");
             }

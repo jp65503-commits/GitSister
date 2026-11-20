@@ -1191,6 +1191,8 @@ MonoBehaviour:
   puloSFX: {fileID: 8300000, guid: 8fb3ad3bcbcb1424ebb7278ef3a2fa85, type: 3}
   botaoAtivoSFX: {fileID: 8300000, guid: dec5c93964f71e84f9bbc1485434245e, type: 3}
   botaoDesativoSFX: {fileID: 8300000, guid: 0c94b365e4a665543af0425854b3bdf4, type: 3}
+  portaAbrirSFX: {fileID: 8300000, guid: 75af5849fbba6e0448bddac01118a11d, type: 3}
+  portaFecharSFX: {fileID: 8300000, guid: 5b19b67dd1d05434bb168f310e7d8f2b, type: 3}
 --- !u!1 &8519268432390539995
 GameObject:
   m_ObjectHideFlags: 0
