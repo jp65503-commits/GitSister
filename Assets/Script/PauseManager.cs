@@ -9,6 +9,7 @@ public class PauseManager : MonoBehaviour
 
     [Header("verificacoes")]
     [SerializeField] private bool isPaused;
+    [SerializeField] private bool isReading;
 
     private void Awake()
     {
@@ -18,28 +19,52 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetKeyUp(KeyCode.Escape) && !isReading)
         {
-            HandlePause();
+            HandlePause(false);
         }
     }
 
-    public void HandlePause()
+    public void HandlePause(bool livro)
     {
+        if (livro)
+        {
+            if (isReading)
+            {
+                return;
+            }
+
+            isReading = true;
+            isPaused = true;
+
+            SetObjectiveMenuChildren(false);
+            Time.timeScale = 0f;
+            return;
+        }
+
         if (!isPaused)
         {
+            isPaused = true;
             SetPauseMenuChildren(true);
             SetObjectiveMenuChildren(false);
             Time.timeScale = 0f;
-            isPaused = true;
         }
         else
         {
+            isPaused = false;
             SetPauseMenuChildren(false);
             SetObjectiveMenuChildren(true);
             Time.timeScale = 1f;
-            isPaused = false;
         }
+    }
+
+    public void FecharLivro()
+    {
+        isReading = false;
+        isPaused = false;
+
+        SetObjectiveMenuChildren(true);
+        Time.timeScale = 1f;
     }
 
     public void QuitGame()

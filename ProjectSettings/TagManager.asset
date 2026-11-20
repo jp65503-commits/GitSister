@@ -8,6 +8,7 @@ TagManager:
   - pause
   - objective
   - Caixa
+  - livro
   layers:
   - Default
   - TransparentFX
