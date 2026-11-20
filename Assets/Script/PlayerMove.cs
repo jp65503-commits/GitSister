@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private TrailRenderer jumpTrail;
     [SerializeField] private GameObject landingParticles;
     [SerializeField] private PlayerMorte playerMorte;
+    [SerializeField] private AudioManager audioManager;
 
     [Header("Ajustes da Movimentação")]
     [SerializeField] private float moveSpeed;
@@ -65,6 +66,7 @@ public class PlayerMove : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space) && canJump)
             {
                 transform.SetParent(null);
+                audioManager.TocarSFX(audioManager.puloSFX);
 
                 // Mantemos a velocidade no eixo X (ou seja esquerda e direita) e aplicamos um impulso no eixo Y (Horizontal) com base na variavel "jumpForce"
                 rigidBodyPlayer.linearVelocity = new Vector2(rigidBodyPlayer.linearVelocity.x, jumpForce);
