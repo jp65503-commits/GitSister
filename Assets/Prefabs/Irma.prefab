@@ -1712,7 +1712,7 @@ Transform:
   m_GameObject: {fileID: 8363637805156760783}
   serializedVersion: 2
   m_LocalRotation: {x: 0.14262895, y: -0, z: -0, w: 0.98977625}
-  m_LocalPosition: {x: 0, y: 3, z: -9.54}
+  m_LocalPosition: {x: 0, y: 4, z: -15}
   m_LocalScale: {x: 1, y: 0.6666666, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1858,6 +1858,8 @@ MonoBehaviour:
   botaoDesativoSFX: {fileID: 8300000, guid: 0c94b365e4a665543af0425854b3bdf4, type: 3}
   portaAbrirSFX: {fileID: 8300000, guid: 75af5849fbba6e0448bddac01118a11d, type: 3}
   portaFecharSFX: {fileID: 8300000, guid: 5b19b67dd1d05434bb168f310e7d8f2b, type: 3}
+  alavancaAtivaSFX: {fileID: 0}
+  alavancaDesativaSFX: {fileID: 0}
 --- !u!1 &8519268432390539995
 GameObject:
   m_ObjectHideFlags: 0
@@ -2022,6 +2024,7 @@ MonoBehaviour:
   landingParticles: {fileID: 4483696633904255747, guid: f0f2b7c252ce7c74ea85247ac4427f69, type: 3}
   playerMorte: {fileID: 963023925498634349}
   audioManager: {fileID: 9048618820486710909}
+  peIrmao: {fileID: 0}
   moveSpeed: 5
   jumpForce: 7
   jumpCutOffForce: 0.5
@@ -2030,8 +2033,13 @@ MonoBehaviour:
   isGrounded: 0
   canJump: 1
   hasLeftGround: 0
+  cutscene: 0
+  velocityReset: 0
   playerAnimator: {fileID: 3508210841291705335}
   playerModel: {fileID: 3599606251214558955}
+  irmaoAnimator: {fileID: 0}
+  irmaoModel: {fileID: 0}
+  irmaoFollowing: 0
 --- !u!96 &3164752335781115497
 TrailRenderer:
   serializedVersion: 4
@@ -2197,7 +2205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4480994524703266, guid: de2a7efe044817e43b49fa819dea7499, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.512
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: 4480994524703266, guid: de2a7efe044817e43b49fa819dea7499, type: 3}
       propertyPath: m_LocalPosition.z

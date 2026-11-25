@@ -12,6 +12,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private GameObject landingParticles;
     [SerializeField] private PlayerMorte playerMorte;
     [SerializeField] private AudioManager audioManager;
+    [SerializeField] private GameObject peIrmao;
 
     [Header("Ajustes da Movimentação")]
     [SerializeField] private float moveSpeed;
@@ -33,34 +34,70 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private Transform playerModel;
 
+    [Header("Animaçoes Irmao")]
+    [SerializeField] private Animator irmaoAnimator;
+    [SerializeField] private Transform irmaoModel;
+    [SerializeField] private bool irmaoFollowing;
+
     // Guarda a dire  o horizontal desejada pelo jogador
     private float inputHorizontal;
 
     void Update()
     {
+        if (irmaoFollowing)
+        {
+            irmaoAnimator.SetBool("followingPlayer", true);
+        }
         inputHorizontal = Input.GetAxisRaw("Horizontal");
 
         if (!cutscene)
         {
+
             playerAnimator.SetBool("isWalking", Mathf.Abs(inputHorizontal) > 0.01f);
+
+            if (irmaoFollowing)
+            {
+                irmaoAnimator.SetBool("isWalking", Mathf.Abs(inputHorizontal) > 0.01f);
+            }
         }
         else
         {
             playerAnimator.SetBool("isWalking", false);
+
+            if (irmaoFollowing)
+            {
+
+                irmaoAnimator.SetBool("isWalking", false);
+            }
         }
 
         playerAnimator.SetBool("isGrounded", isGrounded);
+
+        if (irmaoFollowing)
+        {
+            irmaoAnimator.SetBool("isGrounded", isGrounded);
+        }
 
         if (!playerMorte.dead && !cutscene)
         {
             if (inputHorizontal > 0f)
             {
                 playerModel.localRotation = Quaternion.Euler(0f, 90f, 0f);
+
+                if (irmaoFollowing)
+                {
+                    irmaoModel.localRotation = Quaternion.Euler(0f, 90f, 0f);
+                }
             }
 
             else if (inputHorizontal < 0f)
             {
                 playerModel.localRotation = Quaternion.Euler(0f, -90f, 0f);
+
+                if (irmaoFollowing)
+                {
+                    irmaoModel.localRotation = Quaternion.Euler(0f, -90f, 0f);
+                }
             }
 
 
@@ -115,6 +152,12 @@ public class PlayerMove : MonoBehaviour
                 currentCoyoteTime = 0;
                 jumpTrail.emitting = false;
                 Instantiate(landingParticles, groundedTrigger.transform.position, landingParticles.transform.rotation);
+
+                if (irmaoFollowing)
+                {
+                    Instantiate(landingParticles, peIrmao.transform.position, landingParticles.transform.rotation);
+                }
+
                 hasLeftGround = false;
                 canJump = true;
             }
