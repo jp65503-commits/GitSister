@@ -9,6 +9,7 @@ TagManager:
   - objective
   - Caixa
   - livro
+  - PlataformaMovel
   layers:
   - Default
   - TransparentFX

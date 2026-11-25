@@ -26,6 +26,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public bool isGrounded;
     [SerializeField] public bool canJump;
     [SerializeField] private bool hasLeftGround;
+    [SerializeField] public bool cutscene;
+    [SerializeField] public bool velocityReset;
 
     [Header("Animaçoes")]
     [SerializeField] private Animator playerAnimator;
@@ -38,11 +40,18 @@ public class PlayerMove : MonoBehaviour
     {
         inputHorizontal = Input.GetAxisRaw("Horizontal");
 
-        playerAnimator.SetBool("isWalking", Mathf.Abs(inputHorizontal) > 0.01f);
+        if (!cutscene)
+        {
+            playerAnimator.SetBool("isWalking", Mathf.Abs(inputHorizontal) > 0.01f);
+        }
+        else
+        {
+            playerAnimator.SetBool("isWalking", false);
+        }
 
         playerAnimator.SetBool("isGrounded", isGrounded);
 
-        if (!playerMorte.dead)
+        if (!playerMorte.dead && !cutscene)
         {
             if (inputHorizontal > 0f)
             {
@@ -123,7 +132,11 @@ public class PlayerMove : MonoBehaviour
             jumpTrail.emitting = false;
             hasLeftGround = false;
             canJump = false;
-            rigidBodyPlayer.linearVelocity = Vector2.zero;
+            if (!velocityReset)
+            {
+                rigidBodyPlayer.linearVelocity = Vector3.zero;
+                velocityReset = true;
+            }
         }
     }
 
@@ -134,13 +147,11 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate() // O FixedUpdate   parecido com o Update normal, a diferen a   que ele   chamado em intervalos fixos de tempo
     {
         // Esse   o c lculo base da movimenta  o, basicamente ele pega a dire  o, multiplica pela velocidade e aplica ao Rigidbody2D do player
-            if (!playerMorte.dead)
+        if (!playerMorte.dead && !cutscene)
         {
-            rigidBodyPlayer.linearVelocity = new Vector2(inputHorizontal * moveSpeed, rigidBodyPlayer.linearVelocity.y);
-        }
-        else
-        {
-            rigidBodyPlayer.linearVelocity = Vector2.zero;
+            velocityReset = false;
+
+            rigidBodyPlayer.linearVelocity = new Vector3(inputHorizontal * moveSpeed, rigidBodyPlayer.linearVelocity.y, 0f);
         }
 
         // Essa verifica  o esta sendo feita para verificar se o p  do player "GroundedTrigger" ta encostando em alguma plataforma
@@ -148,15 +159,22 @@ public class PlayerMove : MonoBehaviour
         isGrounded = Physics.CheckBox(groundedTrigger.bounds.center, groundedTrigger.bounds.extents, groundedTrigger.transform.rotation, LayerMask.GetMask("Plataforma"));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("PlataformaMovel") && transform.parent != collision.transform && isGrounded)
+        if (collision.gameObject.CompareTag("PlataformaMovel") && transform.parent != collision.transform)
         {
-            transform.SetParent(collision.transform, true);
+            foreach (ContactPoint contato in collision.contacts)
+            {
+                if (contato.normal.y > 0.7f)
+                {
+                    transform.SetParent(collision.transform.parent, true);
+                    break;
+                }
+            }
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("PlataformaMovel") && collision.gameObject.activeInHierarchy)
         {
@@ -168,36 +186,36 @@ public class PlayerMove : MonoBehaviour
     {
 
         // Aqui tem uma verificação que basicamente fala se o player (dono do script) entrou em contato com um trigger com a tag "Moeda"
-    /*    if (collision.CompareTag("Moeda"))
-        {
-            // O "++" aumenta o valor da variavel "coinAmount" em 1
-            coinAmount++;
+        /*    if (collision.CompareTag("Moeda"))
+            {
+                // O "++" aumenta o valor da variavel "coinAmount" em 1
+                coinAmount++;
 
-            // Aqui nós atualizamos o texto do contador de moedas, convertendo a quantidade de moedas coletadas em texto usando o "ToString()"
-            coinCounterText.text = coinAmount.ToString();
+                // Aqui nós atualizamos o texto do contador de moedas, convertendo a quantidade de moedas coletadas em texto usando o "ToString()"
+                coinCounterText.text = coinAmount.ToString();
 
-            // Aqui sei que o "collision" tem a tag "Moeda", e tambem sei que ele possui o script "ScriptMoeda" então uso o "GetComponent" para pegar uma referencia de seu script e chamo a funçao de pegar a moeda
-            // Se o objeto tiver a tag "Moeda" e não tiver o script "ScriptMoeda" vai dar um erro, mas nos temos certeza que ele tem, logo n é necessario fazer nenhuma verificação extra :p
-            collision.GetComponent<ScriptMoeda>().CollectCoin();
-        }*/
+                // Aqui sei que o "collision" tem a tag "Moeda", e tambem sei que ele possui o script "ScriptMoeda" então uso o "GetComponent" para pegar uma referencia de seu script e chamo a funçao de pegar a moeda
+                // Se o objeto tiver a tag "Moeda" e não tiver o script "ScriptMoeda" vai dar um erro, mas nos temos certeza que ele tem, logo n é necessario fazer nenhuma verificação extra :p
+                collision.GetComponent<ScriptMoeda>().CollectCoin();
+            }*/
 
         // Aqui faço as verificaçoes para o pulo extra
-     /*   if (collision.CompareTag("PuloExtra"))
-        {
-            // Aqui a logica e parecida com o que aconteceu acima ^^^ mas ao invez de so utilizar o script eu armazeno ele temporariamente
-            ScriptPuloExtra puloExtra = collision.GetComponent<ScriptPuloExtra>();
+        /*   if (collision.CompareTag("PuloExtra"))
+           {
+               // Aqui a logica e parecida com o que aconteceu acima ^^^ mas ao invez de so utilizar o script eu armazeno ele temporariamente
+               ScriptPuloExtra puloExtra = collision.GetComponent<ScriptPuloExtra>();
 
-            // Se o pulo extra estiver ativo e o player não estiver no chão e não pode mais pular, o player pode pular novamente
-            if (puloExtra.active && !playerMove.isGrounded && !playerMove.canJump)
-            {
-                playerMove.canJump = true;
-                puloExtra.DesativarPuloExtra();
-            }
-        }*/
+               // Se o pulo extra estiver ativo e o player não estiver no chão e não pode mais pular, o player pode pular novamente
+               if (puloExtra.active && !playerMove.isGrounded && !playerMove.canJump)
+               {
+                   playerMove.canJump = true;
+                   puloExtra.DesativarPuloExtra();
+               }
+           }*/
 
-     /*   if (collision.CompareTag("Dano"))
-        {
-            playerMorte.KillPlayer();
-        }*/
+        /*   if (collision.CompareTag("Dano"))
+           {
+               playerMorte.KillPlayer();
+           }*/
     }
 }

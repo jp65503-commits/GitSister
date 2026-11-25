@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7370608960691534184}
   - component: {fileID: 8579395255857096636}
   - component: {fileID: 4513868073532971677}
+  - component: {fileID: 5944170727894574455}
   m_Layer: 3
   m_Name: Caixa
   m_TagString: Caixa
@@ -99,7 +100,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3833146183698249773}
-  m_Material: {fileID: 13400000, guid: 78e9c973e9056cd458f54763d720c4dc, type: 2}
+  m_Material: {fileID: 13400000, guid: 0aaea95963a7ad04381ac53aca10b986, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -138,5 +139,17 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 8
+  m_Constraints: 56
   m_CollisionDetection: 0
+--- !u!114 &5944170727894574455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3833146183698249773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bec80120fb955d45bf2aca64f71f46a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Caixa

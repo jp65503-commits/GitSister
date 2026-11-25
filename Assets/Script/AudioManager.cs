@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public AudioClip botaoDesativoSFX;
     [SerializeField] public AudioClip portaAbrirSFX;
     [SerializeField] public AudioClip portaFecharSFX;
+    [SerializeField] public AudioClip alavancaAtivaSFX;
+    [SerializeField] public AudioClip alavancaDesativaSFX;
     public void TocarSFX(AudioClip clip)
     {
         audioSourceSFX.PlayOneShot(clip);
