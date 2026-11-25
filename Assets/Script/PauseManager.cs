@@ -10,6 +10,7 @@ public class PauseManager : MonoBehaviour
     [Header("verificacoes")]
     [SerializeField] private bool isPaused;
     [SerializeField] private bool isReading;
+    [SerializeField] public bool isInCutscene;
 
     private void Awake()
     {
@@ -19,7 +20,8 @@ public class PauseManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) && !isReading)
+
+        if (Input.GetKeyUp(KeyCode.Escape) && !isReading && !isInCutscene)
         {
             HandlePause(false);
         }

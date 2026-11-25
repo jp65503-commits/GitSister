@@ -199,7 +199,7 @@ public class PlayerMove : MonoBehaviour
 
         // Essa verifica  o esta sendo feita para verificar se o p  do player "GroundedTrigger" ta encostando em alguma plataforma
         // Basicamente para verificar se o player pode pular ou n o
-        isGrounded = Physics.CheckBox(groundedTrigger.bounds.center, groundedTrigger.bounds.extents, groundedTrigger.transform.rotation, LayerMask.GetMask("Plataforma"));
+        isGrounded = Physics.CheckBox(groundedTrigger.bounds.center, groundedTrigger.bounds.extents, groundedTrigger.transform.rotation, LayerMask.GetMask("Plataforma", "Caixa"));
     }
 
     private void OnCollisionEnter(Collision collision)
