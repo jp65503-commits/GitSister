@@ -10,6 +10,7 @@ public class triggerFinal : MonoBehaviour
     [Header("Referencias")]
     [SerializeField] private PlayerMove playerMove;
     [SerializeField] private GameObject canvasFalaIrmao;
+    [SerializeField] private GameObject canvasFinal;
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private PauseManager pauseManager;
     [SerializeField] private float tempoAteComecar;
@@ -33,7 +34,13 @@ public class triggerFinal : MonoBehaviour
         canvasFalaIrmao.gameObject.SetActive(false);
         audioManager.TocarSFX(audioManager.diabo);
         yield return new WaitForSeconds(tempoDeFala);
-        SceneManager.LoadScene("Mainmenu");
+        canvasFinal.gameObject.SetActive(true);
+      
 
+    }
+
+    public void VoltarAoMenu()
+    {
+        SceneManager.LoadScene("Mainmenu");
     }
 }
